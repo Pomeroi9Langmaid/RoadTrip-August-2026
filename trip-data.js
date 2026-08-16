@@ -89,10 +89,10 @@ M("IMG_4501","IMG_4501.JPG","photo","media/IMG_4501.jpg","thumbs/IMG_4501.jpg","
 ]},
 {...{"id":"vadstena","day":6,"date":"2026-08-14","title":"Vadstena Youth Hostel","subtitle":"Night 6 · 14–15 August","lat":58.44592,"lng":14.89912,"kind":"overnight","routeWaypoint":true,"confidence":"verified-address","address":"Skänningegatan 20, 592 31 Vadstena"},media:[
 M("A529E6AB-B492-4572-B195-9F7ABF642C82","A529E6AB-B492-4572-B195-9F7ABF642C82.png","photo","media/A529E6AB-B492-4572-B195-9F7ABF642C82.jpg","thumbs/A529E6AB-B492-4572-B195-9F7ABF642C82.jpg",null,null,null,null),
+M("6051D984-3A54-4704-BDD0-5CB089006A0C","6051D984-3A54-4704-BDD0-5CB089006A0C.png","photo","media/6051D984-3A54-4704-BDD0-5CB089006A0C.jpg","thumbs/6051D984-3A54-4704-BDD0-5CB089006A0C.jpg",null,null,null,null),
 ]},
 {...{"id":"home-end","day":7,"date":"2026-08-15","title":"Home — Kungälv","subtitle":"Back home · Saturday 15 August","lat":57.89,"lng":11.97,"kind":"home","routeWaypoint":true,"confidence":"approximate"},media:[
 ]},
 ],unlocatedMedia:[
-M("6051D984-3A54-4704-BDD0-5CB089006A0C","6051D984-3A54-4704-BDD0-5CB089006A0C.png","photo","media/6051D984-3A54-4704-BDD0-5CB089006A0C.jpg","thumbs/6051D984-3A54-4704-BDD0-5CB089006A0C.jpg",null,null,null,null),
 M("67ABBC03-B9D2-46F7-A3E8-C7A3937F64AC","67ABBC03-B9D2-46F7-A3E8-C7A3937F64AC.png","photo","media/67ABBC03-B9D2-46F7-A3E8-C7A3937F64AC.jpg","thumbs/67ABBC03-B9D2-46F7-A3E8-C7A3937F64AC.jpg",null,null,null,null),
 ],walkRoutes:[{"id":"seven-torps-walk","label":"7‑torpsleden photo trail","day":3,"points":[[60.14175,12.555717],[60.126475,12.587472],[60.149036,12.541905],[60.14175,12.555717]]}],notes:["Timestamped GPS media currently covers 9–11 August. One undated image has been manually identified as Vadstena; the later days still need their timestamped/GPS media."]};
