@@ -3,108 +3,79 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#173c35" />
+  <meta name="theme-color" content="#12313d" />
   <title>Lisa & Andrew’s Scenic Swedish Road Trip — August 2026</title>
-  <base href="https://cdn.jsdelivr.net/gh/Pomeroi9Langmaid/RoadTrip-August-2026@67d605724969f29fce35b0f40e58bccbf76454ad/" />
-  <link rel="preconnect" href="https://unpkg.com" />
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Pomeroi9Langmaid/RoadTrip-August-2026@67d605724969f29fce35b0f40e58bccbf76454ad/styles.css" />
+  <base href="https://cdn.jsdelivr.net/gh/Pomeroi9Langmaid/RoadTrip-August-2026@9c1a3beadf5ec45003822450c6d6b9941413d5f0/" />
+  <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@5.24.0/dist/maplibre-gl.css" />
+  <link rel="stylesheet" href="styles-v3.css" />
 </head>
 <body>
-  <header class="topbar">
+  <header class="app-header">
     <div class="brand">
-      <p class="brand__kicker">9–15 AUGUST 2026 · SWEDEN</p>
-      <h1>Lisa & Andrew’s <em>Scenic Swedish Road Trip</em></h1>
+      <h1>Lisa & Andrew’s Scenic Swedish Road Trip</h1>
+      <p>9–15 August 2026 · 7 days · 6 nights · Sweden</p>
     </div>
-    <div id="stats" class="stats" aria-label="Trip statistics"></div>
-    <div class="topbar__actions">
-      <button id="highlightToggle" class="chrome-button" aria-pressed="true">✦ Scenic layer</button>
-      <button id="editToggle" class="chrome-button" aria-pressed="false">Edit</button>
+    <nav id="dayTabs" class="day-tabs" aria-label="Trip days"></nav>
+    <div class="header-actions">
+      <button id="itineraryToggle" class="header-button"><span>Itinerary</span></button>
+      <button id="fullscreenToggle" class="header-button"><span>Fullscreen</span></button>
+      <button id="editToggle" class="header-button" data-edit>Edit</button>
     </div>
   </header>
 
-  <main class="experience">
-    <section class="map-stage" id="mapStage">
-      <div id="map" aria-label="Interactive road-trip map"></div>
+  <main class="app-main">
+    <section id="mapShell" class="map-shell">
+      <div id="map" aria-label="Interactive route map"></div>
 
-      <div class="map-title-chip">
-        <strong>Scenic Swedish Road Trip</strong>
-        <span>real route · stays · photos · highlights</span>
+      <div class="map-tools">
+        <button id="fitRoute" class="map-tool">Fit whole route</button>
       </div>
 
-      <div id="dayTabs" class="day-tabs" role="tablist" aria-label="Filter trip by day"></div>
-
-      <div class="map-actions" aria-label="Map controls">
-        <button id="fitRoute" class="map-action" title="Fit the whole route">⌖ <span>Route</span></button>
-        <button id="panelToggle" class="map-action" title="Show or hide journey panel">☰ <span>Stops</span></button>
-        <button id="fullscreenToggle" class="map-action" title="Fullscreen map">⛶ <span>Fullscreen</span></button>
+      <div class="route-chip">
+        <span class="route-chip__line"></span>
+        <strong id="routeText">Clockwise road trip</strong>
       </div>
 
-      <aside class="journey-panel" id="journeyPanel" aria-label="Journey stops">
-        <div class="journey-panel__header">
-          <div>
-            <p class="mini-kicker">JOURNEY</p>
-            <h2>Places & nights</h2>
-          </div>
-          <button id="closePanel" class="icon-button" aria-label="Close journey panel">×</button>
+      <aside id="itineraryPanel" class="itinerary-panel" aria-label="Trip itinerary">
+        <div class="panel-head">
+          <div><h2>Trip itinerary</h2><p>Overnight stays and scenic highlights</p></div>
+          <button id="closeItinerary" class="icon-button" aria-label="Close itinerary">×</button>
         </div>
-        <div class="panel-key">
-          <span><i class="key-icon key-icon--stay">⌁</i> stay</span>
-          <span><i class="key-icon key-icon--camera">▣</i> media</span>
-          <span><i class="key-icon key-icon--scenic">✦</i> scenic</span>
-        </div>
-        <div id="stopList" class="stop-list"></div>
+        <div id="itineraryContent" class="panel-scroll"></div>
       </aside>
 
-      <div id="routeStatus" class="route-status">Reconstructing the road route…</div>
-
-      <div class="map-legend" id="mapLegend">
-        <button id="legendToggle" class="legend-title">Illustrated highlights <span>⌄</span></button>
-        <div class="legend-body">
-          <span>△ mountain</span><span>♧ forest</span><span>◉ viewpoint</span><span>⌁ overnight</span><span>★ favourite</span>
-        </div>
-      </div>
-
       <section id="galleryDrawer" class="gallery-drawer" aria-hidden="true">
-        <div class="gallery-drawer__top">
+        <div class="gallery-head">
           <button id="closeGallery" class="icon-button" aria-label="Close gallery">×</button>
-          <div>
-            <p id="galleryKicker" class="mini-kicker"></p>
-            <h2 id="galleryTitle"></h2>
-            <p id="galleryMeta" class="gallery-meta"></p>
-          </div>
-          <div class="gallery-links">
-            <a id="galleryWebsiteLink" class="chrome-button" target="_blank" rel="noopener" hidden>Website ↗</a>
-            <a id="galleryMapsLink" class="chrome-button" target="_blank" rel="noopener">Map ↗</a>
-          </div>
+          <div><h2 id="galleryTitle"></h2><p id="galleryMeta"></p></div>
         </div>
         <div id="galleryHero" class="gallery-hero"></div>
         <div id="galleryGrid" class="media-grid"></div>
       </section>
 
       <section id="adminTray" class="admin-tray" hidden>
-        <div class="admin-tray__header">
+        <div class="admin-head">
           <strong>Unassigned media</strong>
           <span id="unassignedCount"></span>
           <button id="exportEdits" class="tiny-button">Export edits</button>
           <button id="resetEdits" class="tiny-button">Reset</button>
         </div>
-        <div id="unassignedGrid" class="media-grid media-grid--compact"></div>
+        <div id="unassignedGrid" class="media-grid"></div>
       </section>
     </section>
   </main>
 
-  <div id="lightbox" class="lightbox" aria-hidden="true">
-    <button class="lightbox__close" id="closeLightbox" aria-label="Close media">×</button>
-    <button class="lightbox__nav lightbox__nav--prev" id="prevMedia" aria-label="Previous media">‹</button>
-    <div id="lightboxStage" class="lightbox__stage"></div>
-    <button class="lightbox__nav lightbox__nav--next" id="nextMedia" aria-label="Next media">›</button>
-    <div id="lightboxCaption" class="lightbox__caption"></div>
+  <div id="lightbox" class="lightbox">
+    <button id="closeLightbox" class="lightbox-close" aria-label="Close media">×</button>
+    <button id="prevMedia" class="lightbox-nav lightbox-prev" aria-label="Previous media">‹</button>
+    <div id="lightboxStage" class="lightbox-stage"></div>
+    <button id="nextMedia" class="lightbox-nav lightbox-next" aria-label="Next media">›</button>
+    <div id="lightboxCaption" class="lightbox-caption"></div>
   </div>
 
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-  <script src="https://cdn.jsdelivr.net/gh/Pomeroi9Langmaid/RoadTrip-August-2026@67d605724969f29fce35b0f40e58bccbf76454ad/trip-data.js"></script>
-  <script src="https://cdn.jsdelivr.net/gh/Pomeroi9Langmaid/RoadTrip-August-2026@67d605724969f29fce35b0f40e58bccbf76454ad/scenic-highlights.js"></script>
-  <script src="https://cdn.jsdelivr.net/gh/Pomeroi9Langmaid/RoadTrip-August-2026@67d605724969f29fce35b0f40e58bccbf76454ad/app.js"></script>
+  <script src="https://unpkg.com/maplibre-gl@5.24.0/dist/maplibre-gl.js"></script>
+  <script src="trip-data.js"></script>
+  <script src="scenic-v3.js"></script>
+  <script src="app-v3.js"></script>
 </body>
 </html>
