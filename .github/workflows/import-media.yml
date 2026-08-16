@@ -25,7 +25,7 @@ jobs:
       - name: Download prepared media pack from Google Drive
         run: |
           python -m pip install --quiet gdown
-          gdown --id 1hRRnM_VCfC6rO8tuF7ogbh6ykXAKTkFK -O /tmp/roadtrip-media.zip
+          gdown 1hRRnM_VCfC6rO8tuF7ogbh6ykXAKTkFK -O /tmp/roadtrip-media.zip
           test -s /tmp/roadtrip-media.zip
 
       - name: Unpack media
