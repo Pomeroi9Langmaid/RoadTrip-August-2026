@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#173c35" />
+  <title>Andrew & Lisa’s Sweden Road Trip — August 2026</title>
+  <link rel="preconnect" href="https://unpkg.com" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIINfQ3ynQJZ8gTugazYfFl7AFYhRZq9t0E=" crossorigin="" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="hero">
+    <div class="hero__veil"></div>
+    <div class="hero__content shell">
+      <p class="eyebrow">9–15 AUGUST 2026 · SWEDEN</p>
+      <h1>Andrew & Lisa’s<br><span>Sweden Road Trip</span></h1>
+      <p class="lede">A living map of the places, nights, photographs and little moments that made the journey.</p>
+      <div id="stats" class="stats" aria-label="Trip statistics"></div>
+      <div class="hero__actions">
+        <button id="jumpToMap" class="button button--primary">Explore the map</button>
+        <button id="editToggle" class="button button--ghost" aria-pressed="false">Edit mode</button>
+      </div>
+      <p id="editHint" class="edit-hint" hidden>Preview editor: reorder, choose cover photos, move media, rename places and drag pins. Changes save in this browser.</p>
+    </div>
+  </header>
+
+  <main>
+    <section class="map-section shell" id="mapSection">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow eyebrow--dark">THE JOURNEY</p>
+          <h2>Follow the road</h2>
+        </div>
+        <div class="map-tools">
+          <button id="fitRoute" class="small-button">Fit route</button>
+          <button id="exportEdits" class="small-button edit-only" hidden>Export edits</button>
+          <button id="resetEdits" class="small-button edit-only" hidden>Reset edits</button>
+        </div>
+      </div>
+
+      <div class="map-layout">
+        <div class="map-card">
+          <div id="map" aria-label="Interactive road trip map"></div>
+          <div class="map-legend">
+            <span><i class="legend-dot legend-dot--home"></i> Home</span>
+            <span><i class="legend-dot legend-dot--stop"></i> Stop</span>
+            <span><i class="legend-dot legend-dot--stay"></i> Overnight</span>
+            <span><i class="legend-dot legend-dot--walk"></i> Walking stop</span>
+          </div>
+          <div id="routeStatus" class="route-status">Reconstructing road route…</div>
+        </div>
+        <aside class="route-panel">
+          <div id="dayTabs" class="day-tabs" role="tablist" aria-label="Filter by day"></div>
+          <div id="stopList" class="stop-list"></div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="story shell">
+      <div class="story-card">
+        <p class="eyebrow eyebrow--dark">WHAT THE IPHONE REMEMBERED</p>
+        <h2>53 files knew exactly where they were.</h2>
+        <p>GPS and capture times reconstruct the first three days from Håverud through Duse Udde, Glava Glasbruk and into Finnskogen. Four image files arrived without location metadata and are kept in an “Unassigned” tray so they can be placed manually.</p>
+      </div>
+      <div class="story-card story-card--note">
+        <p class="eyebrow eyebrow--dark">STILL TO COMPLETE</p>
+        <h2>12–15 August needs its media.</h2>
+        <p>The overnight anchors for Torsby, Vintrosa, Stockholm and Vadstena are already on the map. The ZIP contained no timestamped GPS media after the evening of 11 August, so those later days remain ready for the next batch.</p>
+      </div>
+    </section>
+
+    <section class="unassigned shell" id="unassignedSection">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow eyebrow--dark">UNASSIGNED MEDIA</p>
+          <h2>Place these when ready</h2>
+        </div>
+      </div>
+      <div id="unassignedGrid" class="media-grid media-grid--compact"></div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="shell footer-inner">
+      <div><strong>Andrew & Lisa · Sweden · August 2026</strong><br><span>Built from original iPhone GPS and timestamps.</span></div>
+      <div class="footer-note">Map: OpenStreetMap preview · Google Maps links on every stop</div>
+    </div>
+  </footer>
+
+  <div id="galleryModal" class="modal" aria-hidden="true">
+    <div class="modal__backdrop" data-close-modal></div>
+    <div class="modal__panel" role="dialog" aria-modal="true" aria-labelledby="galleryTitle">
+      <button class="modal__close" data-close-modal aria-label="Close gallery">×</button>
+      <div class="modal__header">
+        <div>
+          <p id="galleryKicker" class="eyebrow eyebrow--dark"></p>
+          <h2 id="galleryTitle"></h2>
+          <p id="galleryMeta" class="gallery-meta"></p>
+        </div>
+        <a id="galleryMapsLink" class="small-button" target="_blank" rel="noopener">Google Maps ↗</a>
+      </div>
+      <div id="galleryHero" class="gallery-hero"></div>
+      <div id="galleryGrid" class="media-grid"></div>
+    </div>
+  </div>
+
+  <div id="lightbox" class="lightbox" aria-hidden="true">
+    <button class="lightbox__close" data-close-lightbox aria-label="Close media">×</button>
+    <button class="lightbox__nav lightbox__nav--prev" id="prevMedia" aria-label="Previous media">‹</button>
+    <div id="lightboxStage" class="lightbox__stage"></div>
+    <button class="lightbox__nav lightbox__nav--next" id="nextMedia" aria-label="Next media">›</button>
+    <div id="lightboxCaption" class="lightbox__caption"></div>
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script src="trip-data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
