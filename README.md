@@ -9,6 +9,7 @@ Interactive road-trip journal for **9–15 August 2026**.
 - Timestamped media in the supplied archive currently covers **9–11 August**.
 - Overnight anchors are mapped for the complete trip through 15 August.
 - Four PNG files have no usable GPS/date metadata and appear in the Unassigned tray.
+- The home/Kungälv pin is currently approximate and can be refined in Edit mode.
 
 ## Editing
 
@@ -31,4 +32,6 @@ The project can be switched to the Google Maps JavaScript API once a browser-res
 
 ## Media
 
-`media/` contains web-optimised derivatives. The untouched iPhone originals are not modified by this project.
+Web-optimised derivatives have been prepared for `media/` and `thumbs/`. They are not yet committed because the connected GitHub write API available in ChatGPT supports UTF-8 repository files but not binary uploads. The source code and complete trip/media manifest are already in `main`.
+
+The untouched iPhone originals are not modified by this project.
