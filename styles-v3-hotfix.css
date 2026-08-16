@@ -1,0 +1,77 @@
+/* Visual/positioning corrections after live-map review */
+
+/* MapLibre requires its marker elements to remain absolutely positioned.
+   styles-v3.css accidentally changed the custom stay marker to relative,
+   causing stays 4–6 to drift progressively south. */
+.maplibregl-marker.trip-marker{
+  position:absolute !important;
+}
+
+/* Keep the overview elegant: map labels + route first, scenic cards second. */
+.scenic-marker{
+  grid-template-columns:42px minmax(0,1fr);
+  min-width:118px;
+  max-width:152px;
+  padding:4px 8px 4px 4px;
+  border-radius:12px;
+}
+.scenic-marker__art{
+  width:42px;
+  height:38px;
+  border-radius:9px;
+}
+.scenic-marker strong{
+  font-size:.66rem;
+  line-height:1.08;
+}
+.scenic-marker small{
+  display:none;
+}
+.scenic-marker.is-compact{
+  grid-template-columns:30px minmax(0,1fr);
+  padding:3px 7px 3px 3px;
+}
+.scenic-marker.is-compact .scenic-marker__art{
+  width:30px;
+  height:30px;
+}
+
+/* Make the header-day navigation easier to read without invading the map. */
+.day-tabs{
+  gap:5px;
+  padding:4px;
+}
+.day-tab{
+  padding:8px 11px;
+  font-size:.71rem;
+}
+.day-tab small{
+  margin-left:4px;
+}
+
+/* Make clockwise progression more explicit at a glance. */
+.route-chip{
+  padding:9px 13px;
+  font-size:.72rem;
+  border-color:#c9d7db;
+}
+.route-chip__line{
+  width:46px;
+  height:6px;
+}
+.route-chip__line::after{
+  right:-7px;
+  top:-11px;
+  font-size:21px;
+}
+
+/* A little less visual competition from photo-count pills. */
+.media-marker{
+  padding:4px 6px;
+  font-size:.59rem;
+  box-shadow:0 4px 11px rgba(12,48,59,.15);
+}
+
+@media(max-width:1100px){
+  .day-tab{padding:7px 9px;font-size:.67rem}
+}
