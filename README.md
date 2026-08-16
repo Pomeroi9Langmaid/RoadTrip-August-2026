@@ -2,6 +2,8 @@
 
 Interactive road-trip journal for **9–15 August 2026**.
 
+**Live site:** https://roadtrip-august-2026.vercel.app
+
 ## Current reconstruction
 
 - 57 supplied media files: 46 images and 11 short videos.
@@ -13,7 +15,7 @@ Interactive road-trip journal for **9–15 August 2026**.
 
 ## Editing
 
-The current static preview includes an **Edit mode** for:
+The current site includes an **Edit mode** for:
 
 - drag-and-drop media ordering;
 - choosing the cover/hero image for a stop;
@@ -26,12 +28,21 @@ Edits currently save in the browser via `localStorage` and can be exported as JS
 
 ## Map
 
-The on-page preview uses OpenStreetMap/Leaflet so it works without a paid API key. Road geometry and distance are requested from OSRM when the page loads. Every stop also links directly to Google Maps.
+The embedded map uses OpenStreetMap/Leaflet so it works without a paid API key. Road geometry and distance are requested from OSRM when the page loads. Every stop also links directly to Google Maps.
 
-The project can be switched to the Google Maps JavaScript API once a browser-restricted Google Maps API key is available.
+The project can be switched to the Google Maps JavaScript API later if desired.
 
 ## Media
 
-Web-optimised derivatives have been prepared for `media/` and `thumbs/`. They are not yet committed because the connected GitHub write API available in ChatGPT supports UTF-8 repository files but not binary uploads. The source code and complete trip/media manifest are already in `main`.
+The complete web media set is committed in `main`:
+
+- `media/` — web-optimised photographs and MP4 videos;
+- `thumbs/` — gallery/video thumbnails.
+
+The production Vercel page loads the versioned app assets and media from this public GitHub repository, keeping GitHub as the project’s source of truth.
 
 The untouched iPhone originals are not modified by this project.
+
+## Next data needed
+
+The supplied archive has no timestamped GPS media for **12–15 August**. A later batch can extend the photographic reconstruction through Vintrosa, Stockholm, Vadstena and the return home.
