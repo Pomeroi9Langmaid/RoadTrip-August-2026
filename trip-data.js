@@ -63,6 +63,7 @@ M("IMG_4448","IMG_4448.JPG","photo","media/IMG_4448.jpg","thumbs/IMG_4448.jpg","
 M("IMG_4450","IMG_4450.JPG","photo","media/IMG_4450.jpg","thumbs/IMG_4450.jpg","2026-08-11T16:11:50+02:00",60.126308333333334,12.587158333333335,null),
 ]},
 {...{"id":"ritamaki","day":3,"date":"2026-08-11","title":"Ritamäki finngård","subtitle":"Finnskogen · 7‑torpsleden","lat":60.149036,"lng":12.541905,"kind":"walk","routeWaypoint":false,"confidence":"exact-gps","cover":"IMG_4486"},media:[
+M("51C60866-34D8-45B8-8630-62526AC3E7FF","51C60866-34D8-45B8-8630-62526AC3E7FF.png","photo","media/51C60866-34D8-45B8-8630-62526AC3E7FF.jpg","thumbs/51C60866-34D8-45B8-8630-62526AC3E7FF.jpg",null,null,null,null),
 M("IMG_4459","IMG_4459.MOV","video","media/IMG_4459.mp4","thumbs/IMG_4459.jpg","2026-08-11T17:44:33+02:00",60.1483,12.5421,17),
 M("IMG_4467","IMG_4467.MOV","video","media/IMG_4467.mp4","thumbs/IMG_4467.jpg","2026-08-11T17:47:15+02:00",60.1489,12.5417,29.2),
 M("IMG_4472","IMG_4472.MOV","video","media/IMG_4472.mp4","thumbs/IMG_4472.jpg","2026-08-11T18:08:03+02:00",60.1495,12.5409,23.2),
@@ -92,7 +93,6 @@ M("A529E6AB-B492-4572-B195-9F7ABF642C82","A529E6AB-B492-4572-B195-9F7ABF642C82.p
 {...{"id":"home-end","day":7,"date":"2026-08-15","title":"Home — Kungälv","subtitle":"Back home · Saturday 15 August","lat":57.89,"lng":11.97,"kind":"home","routeWaypoint":true,"confidence":"approximate"},media:[
 ]},
 ],unlocatedMedia:[
-M("51C60866-34D8-45B8-8630-62526AC3E7FF","51C60866-34D8-45B8-8630-62526AC3E7FF.png","photo","media/51C60866-34D8-45B8-8630-62526AC3E7FF.jpg","thumbs/51C60866-34D8-45B8-8630-62526AC3E7FF.jpg",null,null,null,null),
 M("6051D984-3A54-4704-BDD0-5CB089006A0C","6051D984-3A54-4704-BDD0-5CB089006A0C.png","photo","media/6051D984-3A54-4704-BDD0-5CB089006A0C.jpg","thumbs/6051D984-3A54-4704-BDD0-5CB089006A0C.jpg",null,null,null,null),
 M("67ABBC03-B9D2-46F7-A3E8-C7A3937F64AC","67ABBC03-B9D2-46F7-A3E8-C7A3937F64AC.png","photo","media/67ABBC03-B9D2-46F7-A3E8-C7A3937F64AC.jpg","thumbs/67ABBC03-B9D2-46F7-A3E8-C7A3937F64AC.jpg",null,null,null,null),
 ],walkRoutes:[{"id":"seven-torps-walk","label":"7‑torpsleden photo trail","day":3,"points":[[60.14175,12.555717],[60.126475,12.587472],[60.149036,12.541905],[60.14175,12.555717]]}],notes:["Timestamped GPS media currently covers 9–11 August. One undated image has been manually identified as Vadstena; the later days still need their timestamped/GPS media."]};
