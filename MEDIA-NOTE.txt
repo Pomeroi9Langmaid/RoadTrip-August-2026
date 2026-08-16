@@ -1,0 +1,6 @@
+MEDIA PACKAGE
+
+The media/ and thumbs/ folders contain web-optimised derivatives of the supplied iPhone files.
+The original iPhone photos and videos have not been altered.
+
+The GitHub connector used in ChatGPT can write text source files but cannot upload binary repository files, so these folders need to be added to the repository separately.
