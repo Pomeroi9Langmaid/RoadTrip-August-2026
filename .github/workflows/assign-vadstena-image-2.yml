@@ -1,0 +1,45 @@
+name: Assign second Vadstena image
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/assign-vadstena-image-2.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  assign:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Move second image from Unassigned to Vadstena
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('trip-data.js')
+          text = p.read_text()
+          item = 'M("6051D984-3A54-4704-BDD0-5CB089006A0C","6051D984-3A54-4704-BDD0-5CB089006A0C.png","photo","media/6051D984-3A54-4704-BDD0-5CB089006A0C.jpg","thumbs/6051D984-3A54-4704-BDD0-5CB089006A0C.jpg",null,null,null,null),\n'
+          if text.count(item) != 1:
+              raise SystemExit('Expected exactly one 6051D984 media entry')
+          text = text.replace(item, '', 1)
+          first = 'M("A529E6AB-B492-4572-B195-9F7ABF642C82","A529E6AB-B492-4572-B195-9F7ABF642C82.png","photo","media/A529E6AB-B492-4572-B195-9F7ABF642C82.jpg","thumbs/A529E6AB-B492-4572-B195-9F7ABF642C82.jpg",null,null,null,null),\n'
+          if first not in text:
+              raise SystemExit('Existing Vadstena image not found')
+          text = text.replace(first, first + item, 1)
+          p.write_text(text)
+          PY
+
+      - name: Commit assignment and retire workflow
+        run: |
+          git config user.name "Road Trip Editor"
+          git config user.email "actions@users.noreply.github.com"
+          git add trip-data.js
+          git rm .github/workflows/assign-vadstena-image-2.yml
+          git commit -m "Assign second image to Vadstena"
+          git push origin HEAD:main
