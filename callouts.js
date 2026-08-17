@@ -1,18 +1,29 @@
 (() => {
-  // Hand-positioned cartographic callouts. The map coordinate remains the anchor;
-  // paintings are deliberately moved into whitespace and linked back by leader lines.
+  // Scenic locations are always pinned at the exact map coordinate.
+  // Watercolor cards are displaced into whitespace and linked back to the pin.
+  // On the All-days overview only the major paintings remain visible; all exact
+  // scenic pins stay visible. Day views reveal the additional paintings.
   const offsets = {
-    'Håverud Aqueduct': [-220, 34],
-    'Glaskogen Nature Reserve': [-238, 132],
-    'Glava Glasbruk': [-238, 62],
-    'Fryksdalen': [-242, 5],
-    'Tossebergsklätten': [-248, -72],
-    'Ritamäki finngård': [-238, -150],
-    'Hovfjället': [64, -142],
-    'Klarälvdalen': [108, -28],
-    'Vadstena': [126, -58],
-    'Gränna': [120, -4]
+    'Håverud Aqueduct': [-158, 34],
+    'Glaskogen Nature Reserve': [-152, 72],
+    'Glava Glasbruk': [-164, -12],
+    'Fryksdalen': [-154, 22],
+    'Tossebergsklätten': [-158, -52],
+    'Ritamäki finngård': [-168, -105],
+    'Hovfjället': [58, -108],
+    'Klarälvdalen': [78, -24],
+    'Vadstena': [94, -52],
+    'Gränna': [94, 24]
   };
+
+  const overviewPaintings = new Set([
+    'Håverud Aqueduct',
+    'Glava Glasbruk',
+    'Ritamäki finngård',
+    'Hovfjället',
+    'Vadstena',
+    'Gränna'
+  ]);
 
   // Restored watercolor sprite. Scenic artwork never contains photo/video counts;
   // those remain separate clickable camera markers created by app.js.
@@ -34,7 +45,7 @@
     const title = root.querySelector('strong')?.textContent?.trim();
     if (!title) return;
 
-    // Arvika is a route/place label, not a scenic watercolor card.
+    // Arvika is a route/place label rather than a scenic watercolor feature.
     if (title === 'Arvika') {
       root.style.display = 'none';
       root.dataset.calloutReady = '1';
@@ -47,18 +58,18 @@
     root.dataset.calloutReady = '1';
     root.dataset.highlightTitle = title;
     root.classList.add('scenic-anchor', 'has-watercolor');
+    if (!overviewPaintings.has(title)) root.classList.add('overview-detail');
     root.innerHTML = '';
 
     const [dx, dy] = offsets[title];
 
-    // app.js currently creates the scenic MapLibre marker with an +8px x offset.
-    // This 28x36 pin is shifted -22px so its bottom tip lands exactly on the
-    // geographic coordinate rather than 8px to the right of it.
+    // app.js creates the MapLibre marker with an +8px x offset. This SVG is
+    // shifted so the bottom tip lands on the true geographic coordinate.
     const pin = document.createElement('span');
     pin.className = 'scenic-location-pin';
     pin.setAttribute('aria-label', `${title} exact location`);
     pin.title = `${title} — exact location`;
-    pin.innerHTML = '<svg viewBox="0 0 28 36" aria-hidden="true"><path d="M14 1.5C7 1.5 1.8 6.7 1.8 13.4c0 8.7 12.2 21.1 12.2 21.1s12.2-12.4 12.2-21.1C26.2 6.7 21 1.5 14 1.5Z"/><circle cx="14" cy="13.5" r="5"/></svg>';
+    pin.innerHTML = '<svg viewBox="0 0 26 34" aria-hidden="true"><path d="M13 1.5C6.5 1.5 1.6 6.3 1.6 12.6c0 8.1 11.4 19.8 11.4 19.8s11.4-11.7 11.4-19.8C24.4 6.3 19.5 1.5 13 1.5Z"/><circle cx="13" cy="12.8" r="4.6"/></svg>';
 
     const leader = document.createElement('span');
     leader.className = 'scenic-leader';
@@ -77,10 +88,8 @@
     painting.style.setProperty('--sprite-y', `${art[1]}%`);
     card.appendChild(painting);
 
-    // Leader starts at the exact coordinate (8px left of the marker root) and
-    // ends at the nearest edge/centre of the smaller watercolor card.
-    const cardWidth = 118;
-    const cardHeight = 92;
+    const cardWidth = 108;
+    const cardHeight = 84;
     const startX = -8;
     const startY = 0;
     const endX = dx < 0 ? dx + cardWidth : dx;
@@ -95,15 +104,25 @@
     root.append(pin, leader, card);
   }
 
+  function syncOverviewMode() {
+    const active = document.querySelector('.day-tab.is-active');
+    const isOverview = !active || active.dataset.day === 'all';
+    document.body.classList.toggle('map-overview', isOverview);
+  }
+
   function scan(node = document) {
     if (node.matches?.('.scenic-marker')) decorate(node);
     node.querySelectorAll?.('.scenic-marker').forEach(decorate);
+    syncOverviewMode();
   }
 
   scan();
-  new MutationObserver(records => {
+
+  const observer = new MutationObserver(records => {
     records.forEach(record => record.addedNodes.forEach(node => {
       if (node.nodeType === 1) scan(node);
     }));
-  }).observe(document.documentElement, {childList:true, subtree:true});
+    syncOverviewMode();
+  });
+  observer.observe(document.documentElement, {childList:true, subtree:true, attributes:true, attributeFilter:['class']});
 })();
