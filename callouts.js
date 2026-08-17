@@ -1,19 +1,21 @@
 (() => {
+  // Hand-positioned cartographic callouts. The map coordinate remains the anchor;
+  // paintings are deliberately moved into whitespace and linked back by leader lines.
   const offsets = {
-    'Håverud Aqueduct': [-245, -45],
-    'Glaskogen Nature Reserve': [-275, 70],
-    'Glava Glasbruk': [-265, -18],
-    'Fryksdalen': [-260, 28],
-    'Tossebergsklätten': [-255, -58],
-    'Ritamäki finngård': [-270, -92],
-    'Hovfjället': [72, -138],
-    'Klarälvdalen': [112, -42],
-    'Vadstena': [148, -66],
-    'Gränna': [145, 38]
+    'Håverud Aqueduct': [-220, 34],
+    'Glaskogen Nature Reserve': [-238, 132],
+    'Glava Glasbruk': [-238, 62],
+    'Fryksdalen': [-242, 5],
+    'Tossebergsklätten': [-248, -72],
+    'Ritamäki finngård': [-238, -150],
+    'Hovfjället': [64, -142],
+    'Klarälvdalen': [108, -28],
+    'Vadstena': [126, -58],
+    'Gränna': [120, -4]
   };
 
-  // One restored watercolor sprite. Each scenic card is artwork + its painted name only.
-  // Camera/photo counts are separate map markers created by app.js.
+  // Restored watercolor sprite. Scenic artwork never contains photo/video counts;
+  // those remain separate clickable camera markers created by app.js.
   const paintings = {
     'Håverud Aqueduct': [0, 0],
     'Glava Glasbruk': [25, 0],
@@ -32,7 +34,7 @@
     const title = root.querySelector('strong')?.textContent?.trim();
     if (!title) return;
 
-    // Arvika remains part of the route/itinerary, but is not a scenic painting on the overview map.
+    // Arvika is a route/place label, not a scenic watercolor card.
     if (title === 'Arvika') {
       root.style.display = 'none';
       root.dataset.calloutReady = '1';
@@ -48,10 +50,15 @@
     root.innerHTML = '';
 
     const [dx, dy] = offsets[title];
+
+    // app.js currently creates the scenic MapLibre marker with an +8px x offset.
+    // This 28x36 pin is shifted -22px so its bottom tip lands exactly on the
+    // geographic coordinate rather than 8px to the right of it.
     const pin = document.createElement('span');
     pin.className = 'scenic-location-pin';
-    pin.setAttribute('aria-label', title);
-    pin.title = title;
+    pin.setAttribute('aria-label', `${title} exact location`);
+    pin.title = `${title} — exact location`;
+    pin.innerHTML = '<svg viewBox="0 0 28 36" aria-hidden="true"><path d="M14 1.5C7 1.5 1.8 6.7 1.8 13.4c0 8.7 12.2 21.1 12.2 21.1s12.2-12.4 12.2-21.1C26.2 6.7 21 1.5 14 1.5Z"/><circle cx="14" cy="13.5" r="5"/></svg>';
 
     const leader = document.createElement('span');
     leader.className = 'scenic-leader';
@@ -70,11 +77,18 @@
     painting.style.setProperty('--sprite-y', `${art[1]}%`);
     card.appendChild(painting);
 
-    const cardWidth = 170;
-    const targetX = dx < 0 ? dx + cardWidth : dx;
-    const targetY = dy + 58;
-    const length = Math.hypot(targetX, targetY);
-    const angle = Math.atan2(targetY, targetX) * 180 / Math.PI;
+    // Leader starts at the exact coordinate (8px left of the marker root) and
+    // ends at the nearest edge/centre of the smaller watercolor card.
+    const cardWidth = 118;
+    const cardHeight = 92;
+    const startX = -8;
+    const startY = 0;
+    const endX = dx < 0 ? dx + cardWidth : dx;
+    const endY = dy + cardHeight / 2;
+    const vx = endX - startX;
+    const vy = endY - startY;
+    const length = Math.hypot(vx, vy);
+    const angle = Math.atan2(vy, vx) * 180 / Math.PI;
     leader.style.width = `${length}px`;
     leader.style.transform = `rotate(${angle}deg)`;
 
