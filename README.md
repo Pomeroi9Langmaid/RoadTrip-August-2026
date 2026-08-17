@@ -17,13 +17,14 @@ Canonical app files:
 - `styles.css` — main UI styling
 - `map-fixes.css` — MapLibre positioning/readability corrections
 - `callouts.js` / `callouts.css` — offset scenic annotation cards and leader lines
+- `scenic-art/scenic-watercolors.jpg` — restored watercolor scenic-highlight artwork
 - `trip-data.js` — stops, media assignments and trip metadata
 - `scenic-data.js` — scenic highlights, stay order and route anchors
 - `route-weather.js` — reconstructed Google Timeline route, distance and weather-memory layer
 - `media/` — web photographs and MP4 videos
 - `thumbs/` — gallery/video thumbnails
 
-Vercel serves the HTML shell. The shell pins its static assets to one immutable GitHub commit, so CSS, JavaScript, data and media are always loaded from the same version and cannot drift into mixed generations.
+Vercel serves the HTML shell. The shell pins its static assets to one immutable GitHub commit, so CSS, JavaScript, data, scenic artwork and media are always loaded from the same version and cannot drift into mixed generations.
 
 ## Current reconstruction
 
@@ -37,9 +38,9 @@ Vercel serves the HTML shell. The shell pins its static assets to one immutable 
 
 ## Map experience
 
-The site uses **MapLibre** with a clean blue/green vector basemap. The route is drawn beneath map labels, with clockwise directional arrows, numbered overnight stays, separate camera-count markers, scenic callouts, fullscreen mode, day filters and a map-overlay gallery.
+The site uses **MapLibre** with a clean blue/green vector basemap. The route is drawn beneath map labels, with clockwise directional arrows, numbered overnight stays, separate clickable camera-count markers, watercolor scenic callouts, fullscreen mode, day filters and a map-overlay gallery.
 
-Scenic callouts are offset from their exact geographic pins and connected with leader lines so the place itself remains readable.
+Scenic callouts use the restored watercolor artwork from the road-trip concept and are offset from their exact geographic pins with leader lines. Camera/photo-video counts remain separate from the scenic artwork.
 
 ## Weather memory
 
