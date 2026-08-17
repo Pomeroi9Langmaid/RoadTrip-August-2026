@@ -6,7 +6,7 @@ Interactive, map-first road-trip journal for **9–15 August 2026**.
 
 ## Source of truth
 
-The repository is intentionally simple. Production should deploy the same files that are in `main`; there are no production-only app files, no version-suffixed duplicates, and no commit-pinned `<base>` URL.
+GitHub `main` is the source of truth for the app, data and media. The repository has been consolidated so there are no parallel V2/V3 app bundles, old route overrides, or temporary weather files.
 
 Canonical app files:
 
@@ -20,6 +20,8 @@ Canonical app files:
 - `route-weather.js` — reconstructed Google Timeline route, distance and weather-memory layer
 - `media/` — web photographs and MP4 videos
 - `thumbs/` — gallery/video thumbnails
+
+Vercel serves the HTML shell. The shell pins its static assets to one immutable GitHub commit, so CSS, JavaScript, data and media are always loaded from the same version and cannot drift into mixed generations.
 
 ## Current reconstruction
 
@@ -35,7 +37,7 @@ Canonical app files:
 
 The site uses **MapLibre** with a clean blue/green vector basemap. The route is drawn beneath map labels, with clockwise directional arrows, numbered overnight stays, separate camera-count markers, scenic callouts, fullscreen mode, day filters and a map-overlay gallery.
 
-Scenic callouts are deliberately offset from their exact geographic pins and connected with leader lines so the place itself remains readable.
+Scenic callouts are offset from their exact geographic pins and connected with leader lines so the place itself remains readable.
 
 ## Weather memory
 
