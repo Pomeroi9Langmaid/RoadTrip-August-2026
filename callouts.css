@@ -14,6 +14,7 @@
   overflow:visible!important;
   cursor:default!important;
 }
+
 .scenic-location-pin{
   position:absolute;
   left:-16px;
@@ -39,78 +40,60 @@
   border-radius:50%;
   background:#fff;
 }
+
 .scenic-leader{
   position:absolute;
   left:-8px;
   top:-8px;
   height:1px;
-  background:rgba(18,49,61,.58);
+  background:rgba(18,49,61,.48);
   transform-origin:0 50%;
   pointer-events:none;
   z-index:1;
 }
+
 .scenic-callout-card{
   position:absolute;
   left:-8px;
   top:-8px;
   transform:translate(var(--callout-x),var(--callout-y));
-  display:grid;
-  grid-template-columns:52px minmax(0,1fr);
-  align-items:center;
-  gap:7px;
-  min-width:150px;
-  max-width:190px;
-  padding:5px 9px 5px 5px;
-  background:rgba(255,255,255,.96);
-  border:1px solid rgba(199,215,220,.98);
-  border-radius:14px;
-  box-shadow:0 8px 22px rgba(13,49,60,.17);
-  cursor:pointer;
-  backdrop-filter:blur(8px);
   pointer-events:auto;
   z-index:3;
 }
-.scenic-anchor.is-compact .scenic-callout-card{
-  grid-template-columns:34px minmax(0,1fr);
-  min-width:126px;
-  max-width:154px;
-  padding:4px 8px 4px 4px;
-  border-radius:12px;
+
+/* The scenic highlight itself is the watercolor painting with its painted name.
+   No media/photo badge is ever embedded in this card. */
+.scenic-callout-card--watercolor{
+  width:170px;
+  height:133px;
+  padding:0;
+  border:0;
+  background:transparent;
+  box-shadow:none;
+  cursor:pointer;
 }
-.scenic-anchor .scenic-marker__art{
-  width:52px;
-  height:46px;
-  border-radius:10px;
-  overflow:hidden;
-  background:#d9ece6;
-}
-.scenic-anchor.is-compact .scenic-marker__art{
-  width:34px;
-  height:34px;
-  border-radius:9px;
-}
-.scenic-anchor .scenic-callout-card strong{
+.scenic-watercolor{
   display:block;
-  font-size:.69rem;
-  line-height:1.12;
-  letter-spacing:-.01em;
+  width:170px;
+  height:133px;
+  background-image:url('scenic-art/scenic-watercolors.jpg');
+  background-repeat:no-repeat;
+  background-size:500% 200%;
+  background-position:var(--sprite-x) var(--sprite-y);
+  border-radius:15px;
+  border:1px solid rgba(185,202,204,.88);
+  box-shadow:0 8px 22px rgba(13,49,60,.17);
+  background-color:#fff;
 }
-.scenic-anchor .scenic-callout-card small{
-  display:block;
-  margin-top:2px;
-  color:#647a83;
-  font-size:.56rem;
-  line-height:1.18;
+
+@media(max-width:1100px){
+  .scenic-callout-card--watercolor,
+  .scenic-watercolor{width:148px;height:116px}
 }
-.scenic-anchor.scenic-marker--favourite .scenic-callout-card{
-  border-color:#8dbca8;
-  box-shadow:0 9px 24px rgba(32,92,73,.2);
-}
-.scenic-anchor.scenic-marker--favourite .scenic-callout-card strong::before{
-  content:"★ ";
-  color:#39745e;
-}
+
 @media(max-width:900px){
   .scenic-leader{display:none}
-  .scenic-callout-card{transform:translate(calc(var(--callout-x) * .62),calc(var(--callout-y) * .62));max-width:154px}
+  .scenic-callout-card{transform:translate(calc(var(--callout-x) * .58),calc(var(--callout-y) * .58))}
+  .scenic-callout-card--watercolor,
+  .scenic-watercolor{width:132px;height:103px}
 }
