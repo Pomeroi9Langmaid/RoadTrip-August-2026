@@ -5,11 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#12313d" />
   <title>Lisa & Andrew’s Scenic Swedish Road Trip — August 2026</title>
-  <base href="https://cdn.jsdelivr.net/gh/Pomeroi9Langmaid/RoadTrip-August-2026@1591c30e1ca941566be3d7aa91f47b88506c3822/" />
   <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@5.24.0/dist/maplibre-gl.css" />
-  <link rel="stylesheet" href="styles-v3.css" />
-  <link rel="stylesheet" href="styles-v3-hotfix.css" />
-  <link rel="stylesheet" href="styles-scenic-callouts.css" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="map-fixes.css" />
+  <link rel="stylesheet" href="callouts.css" />
 </head>
 <body>
   <header class="app-header">
@@ -28,40 +27,21 @@
   <main class="app-main">
     <section id="mapShell" class="map-shell">
       <div id="map" aria-label="Interactive route map"></div>
-
-      <div class="map-tools">
-        <button id="fitRoute" class="map-tool">Fit whole route</button>
-      </div>
-
-      <div class="route-chip">
-        <span class="route-chip__line"></span>
-        <strong id="routeText">Clockwise road trip</strong>
-      </div>
+      <div class="map-tools"><button id="fitRoute" class="map-tool">Fit whole route</button></div>
+      <div class="route-chip"><span class="route-chip__line"></span><strong id="routeText">Clockwise road trip</strong></div>
 
       <aside id="itineraryPanel" class="itinerary-panel" aria-label="Trip itinerary">
-        <div class="panel-head">
-          <div><h2>Trip itinerary</h2><p>Overnight stays and scenic highlights</p></div>
-          <button id="closeItinerary" class="icon-button" aria-label="Close itinerary">×</button>
-        </div>
+        <div class="panel-head"><div><h2>Trip itinerary</h2><p>Overnight stays and scenic highlights</p></div><button id="closeItinerary" class="icon-button" aria-label="Close itinerary">×</button></div>
         <div id="itineraryContent" class="panel-scroll"></div>
       </aside>
 
       <section id="galleryDrawer" class="gallery-drawer" aria-hidden="true">
-        <div class="gallery-head">
-          <button id="closeGallery" class="icon-button" aria-label="Close gallery">×</button>
-          <div><h2 id="galleryTitle"></h2><p id="galleryMeta"></p></div>
-        </div>
-        <div id="galleryHero" class="gallery-hero"></div>
-        <div id="galleryGrid" class="media-grid"></div>
+        <div class="gallery-head"><button id="closeGallery" class="icon-button" aria-label="Close gallery">×</button><div><h2 id="galleryTitle"></h2><p id="galleryMeta"></p></div></div>
+        <div id="galleryHero" class="gallery-hero"></div><div id="galleryGrid" class="media-grid"></div>
       </section>
 
       <section id="adminTray" class="admin-tray" hidden>
-        <div class="admin-head">
-          <strong>Unassigned media</strong>
-          <span id="unassignedCount"></span>
-          <button id="exportEdits" class="tiny-button">Export edits</button>
-          <button id="resetEdits" class="tiny-button">Reset</button>
-        </div>
+        <div class="admin-head"><strong>Unassigned media</strong><span id="unassignedCount"></span><button id="exportEdits" class="tiny-button">Export edits</button><button id="resetEdits" class="tiny-button">Reset</button></div>
         <div id="unassignedGrid" class="media-grid"></div>
       </section>
     </section>
@@ -77,9 +57,9 @@
 
   <script src="https://unpkg.com/maplibre-gl@5.24.0/dist/maplibre-gl.js"></script>
   <script src="trip-data.js"></script>
-  <script src="scenic-v3.js"></script>
-  <script src="route-weather-v2.js"></script>
-  <script src="app-v3.js"></script>
-  <script src="scenic-callouts.js"></script>
+  <script src="scenic-data.js"></script>
+  <script src="route-weather.js"></script>
+  <script src="app.js"></script>
+  <script src="callouts.js"></script>
 </body>
 </html>

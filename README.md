@@ -4,54 +4,47 @@ Interactive, map-first road-trip journal for **9–15 August 2026**.
 
 **Live site:** https://roadtrip-august-2026.vercel.app
 
+## Source of truth
+
+The repository is intentionally simple. Production should deploy the same files that are in `main`; there are no production-only app files, no version-suffixed duplicates, and no commit-pinned `<base>` URL.
+
+Canonical app files:
+
+- `index.html` — page shell
+- `app.js` — map, itinerary, gallery and edit interactions
+- `styles.css` — main UI styling
+- `map-fixes.css` — MapLibre positioning/readability corrections
+- `callouts.js` / `callouts.css` — offset scenic annotation cards and leader lines
+- `trip-data.js` — stops, media assignments and trip metadata
+- `scenic-data.js` — scenic highlights, stay order and route anchors
+- `route-weather.js` — reconstructed Google Timeline route, distance and weather-memory layer
+- `media/` — web photographs and MP4 videos
+- `thumbs/` — gallery/video thumbnails
+
 ## Current reconstruction
 
+- Trip dates: **9–15 August 2026** — 7 days / 6 nights.
 - 57 supplied media files: 46 images and 11 short videos.
 - 53 files contain usable GPS coordinates.
-- Timestamped GPS media in the supplied archive currently covers **9–11 August**.
-- Overnight anchors are mapped for the complete trip through 15 August.
-- Three originally undated/unlocated PNGs have now been manually identified: two as **Vadstena** and one as **Ritamäki finngård**.
-- **One image remains genuinely unassigned:** `67ABBC03-B9D2-46F7-A3E8-C7A3937F64AC.png`.
-- The home/Kungälv pin is currently approximate and can be refined in Edit mode.
+- Three originally undated/unlocated PNGs have been manually identified: two as **Vadstena** and one as **Ritamäki finngård**.
+- One image remains genuinely unassigned: `67ABBC03-B9D2-46F7-A3E8-C7A3937F64AC.png`.
+- The driving route uses Andrew’s Google Location History trace where recorded, with sparse gaps reconstructed in chronological order. It is an approximate reconstruction rather than an odometer reading.
+- The current reconstructed total is approximately **1,550 km**.
 
-## Map-first experience
+## Map experience
 
-The site is centred on the interactive map rather than a separate dashboard. It includes:
+The site uses **MapLibre** with a clean blue/green vector basemap. The route is drawn beneath map labels, with clockwise directional arrows, numbered overnight stays, separate camera-count markers, scenic callouts, fullscreen mode, day filters and a map-overlay gallery.
 
-- a fullscreen map mode;
-- the reconstructed driving route and day filters;
-- visually distinct home, overnight, walking and media markers;
-- a scenic-highlights layer inspired by the illustrated trip plan;
-- highlighted places including Håverud, Glaskogen, Glava Glasbruk, Arvika, Fryksdalen, Tossebergsklätten, Hovfjället, Klarälvdalen, Ritamäki, Stockholm, Vadstena, Gränna and Kungälv;
-- accommodation and Google Maps links opening in a new tab;
-- photo/video counts on relevant stops;
-- a gallery drawer and fullscreen media viewer that open over the map.
+Scenic callouts are deliberately offset from their exact geographic pins and connected with leader lines so the place itself remains readable.
 
-The basemap uses OpenStreetMap-derived cartography through Leaflet. Road geometry and distance are requested from OSRM when the page loads.
+## Weather memory
+
+`route-weather.js` also provides a day-by-day historical weather-memory layer. These values are intended to help recall the feel of each driving day and are labelled as historical reconstruction rather than certified point observations from a single station.
 
 ## Editing
 
-**Edit mode** supports:
-
-- drag-and-drop media ordering;
-- choosing the cover/hero image for a stop;
-- moving media between stops;
-- soft-hiding/restoring media;
-- renaming stops;
-- dragging map pins to refine their coordinates;
-- reviewing the remaining Unassigned tray, which is hidden from the normal family view.
-
-Edits currently save in the browser via `localStorage` and can be exported as JSON. Published/manual corrections in `trip-data.js` are treated as canonical so stale browser data does not put already-corrected media back into Unassigned.
+Edit mode supports cover selection, media ordering, moving media between stops, hiding/restoring items, moving pins and reviewing the remaining unassigned media. Browser edits use `localStorage`; published corrections in `trip-data.js` remain canonical.
 
 ## Media
 
-The complete web media set is committed in `main`:
-
-- `media/` — web-optimised photographs and MP4 videos;
-- `thumbs/` — gallery/video thumbnails.
-
-The production Vercel page loads versioned app assets and media from this public GitHub repository, keeping GitHub as the project’s source of truth. The untouched iPhone originals are not modified.
-
-## Next data needed
-
-The supplied archive has no timestamped GPS media for **12–15 August**. Another batch can extend the photographic reconstruction through Vintrosa, Stockholm, Vadstena and the return home.
+The web media set is committed to `main`. The untouched iPhone originals are not modified.
