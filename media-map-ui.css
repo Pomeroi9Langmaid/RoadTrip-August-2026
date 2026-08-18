@@ -1,6 +1,7 @@
 /* Exact media location system.
-   The geographic anchor is a small teal dot. The camera/count pill is only a label and may
-   move in screen space to avoid town names and other trip annotations. */
+   The geographic anchor is a teal ring. The camera/count pill is only a label and may
+   move in screen space to avoid town names and other trip annotations. At an overnight
+   location the plum stay anchor can remain visible inside the teal ring. */
 .media-marker.media-marker-source{display:none!important}
 
 .media-location-anchor{
@@ -14,24 +15,16 @@
 
 .media-location-pin{
   position:absolute;
-  left:-6px;
-  top:-6px;
-  width:12px;
-  height:12px;
+  left:-7px;
+  top:-7px;
+  width:14px;
+  height:14px;
   border-radius:50%;
-  background:#165866;
-  border:2.5px solid #fff;
-  box-shadow:0 2px 8px rgba(13,49,60,.28);
+  background:transparent;
+  border:3px solid #165866;
+  box-shadow:0 0 0 2px #fff,0 2px 8px rgba(13,49,60,.25);
   z-index:5;
   pointer-events:none;
-}
-.media-location-pin::after{
-  content:"";
-  position:absolute;
-  inset:2px;
-  border-radius:50%;
-  background:#fff;
-  opacity:.92;
 }
 .media-location-leader{
   position:absolute;
