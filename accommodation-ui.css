@@ -9,34 +9,83 @@
   - plum BED + number = overnight stay sequence
   - white camera pill + count = trip media
   - teal pin = scenic location
-  No accommodation photograph is ever used as the map marker.
+  - a small plum dot is the exact overnight coordinate
+  The numbered accommodation badge is allowed to move into nearby whitespace so it never
+  has to cover the underlying town/city label.
 */
-.trip-marker.stay-marker-semantic{
-  width:54px!important;
-  height:38px!important;
-  border-radius:15px!important;
-  border:2.5px solid #fff!important;
-  background:var(--stay-plum)!important;
-  color:#fff!important;
-  display:grid!important;
-  grid-template-columns:20px 1fr!important;
-  gap:4px!important;
-  place-items:center!important;
-  padding:0 8px!important;
+.maplibregl-marker.trip-marker.stay-marker-semantic{
+  width:0!important;
+  height:0!important;
+  min-width:0!important;
+  padding:0!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
   overflow:visible!important;
-  box-shadow:0 7px 18px rgba(48,30,43,.24)!important;
+  translate:0 0!important;
+  display:block!important;
+  z-index:14!important;
 }
-.trip-marker.stay-marker-semantic:hover{
-  background:var(--stay-plum-dark)!important;
-  transform:translateY(-1px);
+
+.stay-marker__anchor{
+  position:absolute;
+  left:-5px;
+  top:-5px;
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  background:var(--stay-plum);
+  border:2px solid #fff;
+  box-shadow:0 2px 7px rgba(48,30,43,.26);
+  z-index:5;
+  pointer-events:none;
 }
-.trip-marker.stay-marker-semantic .stay-marker__bed{
-  width:18px!important;
-  height:18px!important;
-  color:#fff!important;
-  stroke-width:2!important;
+
+.stay-marker__leader{
+  position:absolute;
+  left:0;
+  top:0;
+  height:1.35px;
+  width:0;
+  background:rgba(86,53,76,.58);
+  transform-origin:0 50%;
+  z-index:2;
+  pointer-events:none;
 }
-.trip-marker.stay-marker-semantic .stay-marker__number{
+
+.stay-marker__badge{
+  position:absolute;
+  left:0;
+  top:0;
+  width:58px;
+  height:40px;
+  border-radius:15px;
+  border:2.5px solid #fff;
+  background:var(--stay-plum);
+  color:#fff;
+  display:grid;
+  grid-template-columns:20px 1fr;
+  gap:4px;
+  place-items:center;
+  padding:0 8px;
+  box-shadow:0 7px 18px rgba(48,30,43,.24);
+  cursor:pointer;
+  z-index:4;
+  translate:var(--stay-x, 18px) var(--stay-y, -48px);
+  transition:background .14s ease,box-shadow .14s ease;
+}
+.stay-marker__badge:hover{
+  background:var(--stay-plum-dark);
+  box-shadow:0 9px 22px rgba(48,30,43,.30);
+}
+.stay-marker__badge .stay-marker__bed{
+  width:18px;
+  height:18px;
+  color:#fff;
+  stroke-width:2;
+}
+.stay-marker__number{
   min-width:18px;
   color:#fff;
   font-size:17px;
@@ -116,18 +165,18 @@
 }
 
 @media(max-width:900px){
-  .trip-marker.stay-marker-semantic{
-    width:50px!important;
-    height:36px!important;
-    border-radius:14px!important;
-    grid-template-columns:18px 1fr!important;
-    padding:0 7px!important;
+  .stay-marker__badge{
+    width:54px;
+    height:38px;
+    border-radius:14px;
+    grid-template-columns:18px 1fr;
+    padding:0 7px;
   }
-  .trip-marker.stay-marker-semantic .stay-marker__bed{
-    width:16px!important;
-    height:16px!important;
+  .stay-marker__badge .stay-marker__bed{
+    width:16px;
+    height:16px;
   }
-  .trip-marker.stay-marker-semantic .stay-marker__number{
-    font-size:16px!important;
+  .stay-marker__number{
+    font-size:16px;
   }
 }
