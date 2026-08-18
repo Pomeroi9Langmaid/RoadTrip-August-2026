@@ -3,14 +3,34 @@
   width:0!important;height:0!important;min-width:0!important;max-width:none!important;
   padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;
   box-shadow:none!important;backdrop-filter:none!important;display:block!important;overflow:visible!important;
-  cursor:default!important;z-index:7!important;
+  cursor:default!important;z-index:18!important;
+}
+
+/* Day filtering must always beat the anchor's display:block rule. */
+.scenic-marker.scenic-anchor.marker-hidden,
+.scenic-marker.scenic-anchor.is-compact.marker-hidden{
+  display:none!important;
+}
+
+/* Keep the exact scenic pin visually dominant. Hotel and camera markers remain nearby,
+   but no longer occupy the same pixel footprint at shared locations. */
+.maplibregl-marker.trip-marker:not(.trip-marker--home){
+  translate:-16px -12px;
+  z-index:9!important;
+}
+.maplibregl-marker.media-marker{
+  translate:14px 18px;
+  z-index:11!important;
+}
+.maplibregl-marker.scenic-marker.scenic-anchor{
+  z-index:18!important;
 }
 
 /* Exact geographic pinpoint. app.js offsets the marker root +8px horizontally,
    so the bottom tip is deliberately centred at x=-8px relative to that root. */
 .scenic-location-pin{
   position:absolute;left:-21px;top:-34px;width:26px;height:34px;
-  pointer-events:auto;cursor:pointer;z-index:12;
+  pointer-events:auto;cursor:pointer;z-index:20;
   filter:drop-shadow(0 3px 6px rgba(18,49,61,.30));
 }
 .scenic-location-pin svg{display:block;width:26px;height:34px;overflow:visible}
@@ -19,8 +39,8 @@
 .scenic-location-pin:hover{transform:translateY(-1px) scale(1.07);transform-origin:50% 100%}
 
 .scenic-leader{
-  position:absolute;left:-8px;top:0;height:1.25px;background:rgba(18,49,61,.55);
-  transform-origin:0 50%;pointer-events:none;z-index:2;
+  position:absolute;left:-8px;top:0;height:1.25px;background:rgba(18,49,61,.56);
+  transform-origin:0 50%;pointer-events:none;z-index:3;
 }
 .scenic-leader::after{
   content:"";position:absolute;right:-2px;top:-2px;width:5px;height:5px;border-radius:50%;background:#12313d;
@@ -28,7 +48,7 @@
 
 .scenic-callout-card{
   position:absolute;left:-8px;top:0;transform:translate(var(--callout-x),var(--callout-y));
-  pointer-events:auto;z-index:4;
+  pointer-events:auto;z-index:5;
 }
 .scenic-callout-card--watercolor{
   width:132px;height:99px;padding:0;border:0;background:transparent;box-shadow:none;cursor:pointer;
@@ -38,6 +58,12 @@
   border-radius:11px;border:2px solid rgba(255,255,255,.98);outline:1px solid rgba(161,183,187,.70);
   box-shadow:0 5px 15px rgba(13,49,60,.16);background:#fff;
 }
+
+/* All-days shows every painting, but slightly smaller to preserve map legibility. */
+.scenic-anchor.is-overview-callout .scenic-callout-card--watercolor,
+.scenic-anchor.is-overview-callout .scenic-watercolor{
+  width:112px;height:84px;
+}
 .scenic-callout-card--watercolor:hover .scenic-watercolor{transform:translateY(-1px);box-shadow:0 7px 18px rgba(13,49,60,.20)}
 
 .scenic-anchor.callout-card-hidden .scenic-callout-card,
@@ -45,9 +71,15 @@
 
 @media(max-width:1100px){
   .scenic-callout-card--watercolor,.scenic-watercolor{width:116px;height:87px}
+  .scenic-anchor.is-overview-callout .scenic-callout-card--watercolor,
+  .scenic-anchor.is-overview-callout .scenic-watercolor{width:102px;height:77px}
 }
 @media(max-width:900px){
   .scenic-callout-card--watercolor,.scenic-watercolor{width:104px;height:78px}
+  .scenic-anchor.is-overview-callout .scenic-callout-card--watercolor,
+  .scenic-anchor.is-overview-callout .scenic-watercolor{width:94px;height:71px}
   .scenic-location-pin{left:-20px;top:-32px;width:24px;height:32px}
   .scenic-location-pin svg{width:24px;height:32px}
+  .maplibregl-marker.trip-marker:not(.trip-marker--home){translate:-12px -9px}
+  .maplibregl-marker.media-marker{translate:10px 14px}
 }
