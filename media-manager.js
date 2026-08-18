@@ -77,12 +77,16 @@
     const bar = ensureManagerBar();
     const status = bar?.querySelector('#mediaManagerStatus');
     if (!status) return;
-    if (override) { status.textContent = override; return; }
-    const state = publishState();
-    const queued = Object.keys(deleteQueue()).length;
-    if (state.dirty) status.textContent = `Changes saved on this device${queued ? ` · ${queued} deletion${queued===1?'':'s'} queued` : ''}`;
-    else if (state.lastExportedAt) status.textContent = `Exported ${new Date(state.lastExportedAt).toLocaleString()}`;
-    else status.textContent = 'No unpublished edits';
+    let next;
+    if (override) next = override;
+    else {
+      const state = publishState();
+      const queued = Object.keys(deleteQueue()).length;
+      if (state.dirty) next = `Changes saved on this device${queued ? ` · ${queued} deletion${queued===1?'':'s'} queued` : ''}`;
+      else if (state.lastExportedAt) next = `Exported ${new Date(state.lastExportedAt).toLocaleString()}`;
+      else next = 'No unpublished edits';
+    }
+    if (status.textContent !== next) status.textContent = next;
   }
 
   function exportManifest() {
