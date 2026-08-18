@@ -1,0 +1,133 @@
+:root{
+  --stay-plum:#6b435f;
+  --stay-plum-dark:#56354c;
+  --stay-plum-soft:#f3edf2;
+}
+
+/*
+  Map semantics:
+  - plum BED + number = overnight stay sequence
+  - white camera pill + count = trip media
+  - teal pin = scenic location
+  No accommodation photograph is ever used as the map marker.
+*/
+.trip-marker.stay-marker-semantic{
+  width:54px!important;
+  height:38px!important;
+  border-radius:15px!important;
+  border:2.5px solid #fff!important;
+  background:var(--stay-plum)!important;
+  color:#fff!important;
+  display:grid!important;
+  grid-template-columns:20px 1fr!important;
+  gap:4px!important;
+  place-items:center!important;
+  padding:0 8px!important;
+  overflow:visible!important;
+  box-shadow:0 7px 18px rgba(48,30,43,.24)!important;
+}
+.trip-marker.stay-marker-semantic:hover{
+  background:var(--stay-plum-dark)!important;
+  transform:translateY(-1px);
+}
+.trip-marker.stay-marker-semantic .stay-marker__bed{
+  width:18px!important;
+  height:18px!important;
+  color:#fff!important;
+  stroke-width:2!important;
+}
+.trip-marker.stay-marker-semantic .stay-marker__number{
+  min-width:18px;
+  color:#fff;
+  font-size:17px;
+  line-height:1;
+  font-weight:800;
+  letter-spacing:-.04em;
+  text-align:center;
+}
+
+/* Media must look completely unlike an overnight marker. */
+.media-marker{
+  min-height:31px!important;
+  padding:6px 9px!important;
+  gap:5px!important;
+  border:1px solid #c9d8dc!important;
+  border-radius:999px!important;
+  background:rgba(255,255,255,.97)!important;
+  color:#173f4b!important;
+  box-shadow:0 5px 14px rgba(12,48,59,.15)!important;
+}
+.media-marker svg{
+  width:15px!important;
+  height:15px!important;
+  color:#1b5d62!important;
+}
+.media-marker span{
+  min-width:13px;
+  text-align:center;
+  font-size:11px!important;
+  line-height:1;
+  font-weight:800!important;
+  color:#173f4b!important;
+}
+
+/* Itinerary: photographs belong here, where "Stay N" gives them clear context. */
+.stay-no{
+  background:var(--stay-plum)!important;
+}
+.stay-row:hover{
+  background:#faf7f9!important;
+  border-color:#e8dfe5!important;
+}
+
+/* Accommodation popup: property/trip photograph is information, not the map symbol. */
+.place-popup--stay{
+  min-width:235px;
+}
+.stay-popup__eyebrow{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  margin:0 0 7px;
+  color:var(--stay-plum);
+  font-size:10px;
+  line-height:1.2;
+  font-weight:800;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+}
+.stay-popup__eyebrow .stay-marker__bed{
+  width:16px;
+  height:16px;
+  flex:none;
+}
+.stay-popup__image{
+  display:block;
+  width:100%;
+  aspect-ratio:16/9;
+  object-fit:cover;
+  margin:7px 0 8px;
+  border-radius:10px;
+  border:1px solid #e0e7e9;
+  background:#eef3f3;
+}
+.place-popup--stay h3{
+  margin-top:0!important;
+}
+
+@media(max-width:900px){
+  .trip-marker.stay-marker-semantic{
+    width:50px!important;
+    height:36px!important;
+    border-radius:14px!important;
+    grid-template-columns:18px 1fr!important;
+    padding:0 7px!important;
+  }
+  .trip-marker.stay-marker-semantic .stay-marker__bed{
+    width:16px!important;
+    height:16px!important;
+  }
+  .trip-marker.stay-marker-semantic .stay-marker__number{
+    font-size:16px!important;
+  }
+}
