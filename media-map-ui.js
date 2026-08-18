@@ -3,7 +3,6 @@
   const map = window.ROADTRIP_MAP;
   if (!trip || !map || !window.maplibregl) return;
 
-  const stopById = new Map((trip.stops || []).map(stop => [stop.id, stop]));
   const exactMarkers = new Map();
   let layingOut = false;
   let queued = false;
@@ -20,8 +19,8 @@
     return Number.isFinite(Number(item?.lat)) && Number.isFinite(Number(item?.lng));
   }
 
-  // Choose one coordinate that was actually recorded by a camera/phone, rather than
-  // inventing a centroid. The medoid is the recorded point most central to the group.
+  // Pick one actually recorded camera/phone coordinate for the group. We use the
+  // recorded point closest to the group's centre rather than inventing a centroid.
   function representativeGps(stop) {
     const points = (stop.media || []).filter(finiteGps);
     if (!points.length) {
@@ -46,12 +45,15 @@
     return { lat:best.lat, lng:best.lng, confidence:'recorded-gps' };
   }
 
+  // Important: once an original camera pill is promoted to a hidden source marker,
+  // we must still be able to find it on every later sync. The previous selector
+  // excluded .media-marker-source, causing the replacement GPS marker to disappear.
   function sourceMarkerFor(stop) {
-    return [...document.querySelectorAll('.media-marker:not(.media-marker-source)')]
-      .find(el => String(el.title || '').endsWith(`from ${stop.title}`));
+    return [...document.querySelectorAll('.media-marker')]
+      .find(el => el.dataset.mediaStopId === stop.id || String(el.title || '').endsWith(`from ${stop.title}`));
   }
 
-  function makeExactMarker(stop, source) {
+  function makeExactMarker(stop) {
     const gps = representativeGps(stop);
     const root = document.createElement('div');
     root.className = 'media-location-anchor';
@@ -96,9 +98,10 @@
         return;
       }
 
+      source.dataset.mediaStopId = stop.id;
       source.classList.add('media-marker-source');
       source.setAttribute('aria-hidden','true');
-      if (!record) record = makeExactMarker(stop, source);
+      if (!record) record = makeExactMarker(stop);
 
       const count = source.querySelector('span')?.textContent?.trim() || String((stop.media || []).length);
       record.label.querySelector('.media-location-count').textContent = count;
