@@ -1,0 +1,56 @@
+/* Media Manager: editing-only controls for safe gallery curation */
+.media-manager-bar{
+  position:sticky;top:64px;z-index:4;display:flex;justify-content:space-between;align-items:center;gap:12px;
+  padding:9px 12px;background:rgba(244,248,248,.97);border-bottom:1px solid var(--line);backdrop-filter:blur(10px)
+}
+.media-manager-bar[hidden]{display:none!important}
+.media-manager-status{display:flex;flex-direction:column;gap:1px;min-width:0}
+.media-manager-status strong{font-size:.68rem;letter-spacing:.02em}
+.media-manager-status span{font-size:.58rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.media-manager-actions{display:flex;gap:6px;flex:0 0 auto}
+.media-manager-actions button{
+  border:1px solid #b9cdd1;background:#fff;color:var(--ink);border-radius:9px;padding:6px 8px;font-size:.59rem;font-weight:800;cursor:pointer;
+  box-shadow:0 2px 8px rgba(15,50,61,.06)
+}
+.media-manager-actions button:hover{background:#eef5f4}
+
+body.editing .media-manager-grid .media-tile{cursor:grab;overflow:visible;border-color:#d4e1e4;transition:transform .12s ease,box-shadow .12s ease,opacity .12s ease}
+body.editing .media-manager-grid .media-tile:active{cursor:grabbing}
+body.editing .media-manager-grid .media-tile.media-dragging{opacity:.48;transform:scale(.98)}
+body.editing .media-manager-grid .media-tile.media-drop-target{outline:3px solid #1b5d62;outline-offset:3px;box-shadow:0 8px 22px rgba(27,93,98,.22)}
+body.editing .media-manager-grid .media-tile.media-delete-queued{outline:2px solid #a33d31;outline-offset:2px}
+body.editing .media-manager-grid .media-tile.media-delete-queued::after{
+  content:"Queued for deletion";position:absolute;right:6px;top:6px;z-index:4;padding:4px 6px;border-radius:999px;background:#a33d31;color:#fff;
+  font-size:.52rem;font-weight:850;box-shadow:0 2px 8px rgba(0,0,0,.15)
+}
+
+body.editing .media-manager-tools{
+  left:5px;right:5px;bottom:5px;display:grid;grid-template-columns:auto auto auto 1fr;align-items:center;gap:4px;
+  padding:5px;background:rgba(255,255,255,.97);border:1px solid rgba(207,220,223,.95);border-radius:9px;box-shadow:0 3px 10px rgba(15,50,61,.12)
+}
+body.editing .media-manager-tools [data-left],
+body.editing .media-manager-tools [data-right]{display:none!important}
+body.editing .media-manager-tools button,
+body.editing .media-manager-tools select{
+  min-height:25px;border:1px solid #cfdcdf;background:#fff;border-radius:7px;padding:4px 6px;font-size:.54rem;font-weight:760;color:var(--ink);cursor:pointer
+}
+body.editing .media-manager-tools select{min-width:0;width:100%;font-weight:650}
+body.editing .media-manager-tools button:hover,
+body.editing .media-manager-tools select:hover{background:#f1f6f6}
+.media-drag-handle{
+  display:inline-flex;align-items:center;justify-content:center;min-height:25px;padding:4px 6px;border-radius:7px;background:#12313d;color:#fff;
+  font-size:.54rem;font-weight:850;letter-spacing:.02em;cursor:grab;user-select:none
+}
+.media-drag-handle:active{cursor:grabbing}
+body.editing .media-manager-tools .media-delete-button{color:#922f25;border-color:#d8aaa3;background:#fff8f6}
+body.editing .media-manager-tools .media-delete-button:hover{background:#fbe8e4}
+body.editing .media-delete-queued .media-manager-tools .media-delete-button{background:#922f25;border-color:#922f25;color:#fff}
+body.editing .hidden-media{opacity:.52;filter:grayscale(.7)}
+
+@media(max-width:900px){
+  .media-manager-bar{top:58px;align-items:flex-start;flex-direction:column}
+  .media-manager-actions{width:100%}
+  .media-manager-actions button{width:100%}
+  body.editing .media-manager-tools{grid-template-columns:1fr 1fr}
+  body.editing .media-manager-tools select{grid-column:1/-1}
+}
