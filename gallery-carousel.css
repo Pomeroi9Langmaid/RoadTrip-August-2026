@@ -1,5 +1,6 @@
-/* In-drawer media browsing: stay on the map first, expand only on request. */
+/* In-drawer media browsing: stable Apple-style frame, expand only on request. */
 .gallery-drawer{
+  z-index:80!important;
   overflow:hidden!important;
   display:flex;
   flex-direction:column;
@@ -7,14 +8,16 @@
 .gallery-head{flex:0 0 auto}
 .gallery-hero{
   position:relative;
-  flex:1 1 auto;
-  min-height:280px;
+  flex:0 0 auto!important;
+  width:calc(100% - 24px);
+  aspect-ratio:16/10;
+  min-height:0!important;
   height:auto!important;
   max-height:none!important;
   margin:12px 12px 8px;
   border-radius:16px;
   overflow:hidden;
-  background:#e7eef0;
+  background:#10191c;
 }
 .gallery-hero>img,.gallery-hero>video,
 .gallery-carousel-stage>img,.gallery-carousel-stage>video{
@@ -24,22 +27,25 @@
   position:absolute;inset:0;
   display:grid;place-items:center;
   background:#10191c;
+  opacity:1;
+  transition:opacity .14s ease;
 }
+.gallery-carousel-stage.is-entering{opacity:.35}
 .gallery-carousel-nav{
   position:absolute;top:50%;transform:translateY(-50%);z-index:5;
   width:38px;height:48px;border:0;border-radius:12px;
-  background:rgba(255,255,255,.9);color:#12313d;
+  background:rgba(255,255,255,.92);color:#12313d;
   box-shadow:0 5px 18px rgba(9,35,43,.18);
   font-size:1.65rem;line-height:1;cursor:pointer;
   display:grid;place-items:center;
-  opacity:.94;
+  opacity:.96;
 }
 .gallery-carousel-nav:hover{background:#fff}
 .gallery-carousel-prev{left:10px}.gallery-carousel-next{right:10px}
 .gallery-carousel-expand{
   position:absolute;right:10px;top:10px;z-index:6;
   border:1px solid rgba(216,226,229,.95);border-radius:999px;
-  background:rgba(255,255,255,.94);color:#12313d;
+  background:rgba(255,255,255,.95);color:#12313d;
   padding:7px 10px;display:flex;align-items:center;gap:6px;
   box-shadow:0 5px 18px rgba(9,35,43,.16);
   font-size:.65rem;font-weight:800;cursor:pointer;
@@ -54,7 +60,7 @@
   backdrop-filter:blur(6px);
 }
 
-/* Horizontal filmstrip. */
+/* Horizontal filmstrip stays entirely inside the drawer. */
 #galleryGrid.media-grid{
   flex:0 0 auto;
   display:flex!important;
@@ -83,9 +89,16 @@
 }
 #galleryGrid .media-tile.is-cover:not(.is-carousel-selected){border-color:#82a99f}
 
+/* Floating map helpers must not sit on top of an open gallery. */
+body.gallery-drawer-open .weather-memory,
+body.gallery-drawer-open .weather-memory-card,
+body.gallery-drawer-open [class*="weather-memory"]{
+  z-index:20!important;
+}
+
 @media(max-width:900px){
   .gallery-drawer{width:min(94vw,620px)}
-  .gallery-hero{min-height:240px}
+  .gallery-hero{aspect-ratio:4/3}
   #galleryGrid .media-tile{flex-basis:132px;width:132px}
   .gallery-carousel-expand span{display:none}
 }
