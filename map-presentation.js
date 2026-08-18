@@ -1,5 +1,5 @@
 (() => {
-  const ROUTE_LABEL = 'Clockwise road trip · ≈1,550 km reconstructed';
+  const ROUTE_LABEL = 'Clockwise road trip · ≈1,550 km';
   let borderAppliedForStyle = null;
 
   function lockRouteLabel() {
@@ -39,8 +39,6 @@
 
     if (!candidates.length) return;
 
-    /* Only touch international/admin-2 boundary layers. This keeps municipal and
-       regional borders quiet while making the Sweden–Norway border much easier to read. */
     candidates.forEach(({ layer }) => {
       try {
         map.setPaintProperty(layer.id, 'line-color', '#536b73');
