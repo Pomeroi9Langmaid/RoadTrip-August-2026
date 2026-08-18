@@ -7,6 +7,7 @@
   let selectedId = null;
   let enhancing = false;
   let queued = false;
+  let renderToken = 0;
   const originalClicks = new WeakMap();
 
   function visibleTiles() {
@@ -34,16 +35,35 @@
     return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3H3v5M16 3h5v5M8 21H3v-5M16 21h5v-5"/></svg>';
   }
 
+  function stopOldVideo() {
+    const oldVideo = hero.querySelector('video');
+    if (!oldVideo) return;
+    try {
+      oldVideo.pause();
+      oldVideo.removeAttribute('src');
+      oldVideo.load();
+    } catch {}
+  }
+
+  function scrollFilmstripTo(tile) {
+    if (!tile) return;
+    const target = tile.offsetLeft - Math.max(0, (grid.clientWidth - tile.offsetWidth) / 2);
+    grid.scrollTo({ left: Math.max(0, target), behavior: 'auto' });
+  }
+
   function renderHero(tile, { scroll = true } = {}) {
     if (!tile) return;
     const source = mediaNode(tile);
     if (!source) return;
 
+    const token = ++renderToken;
     selectedId = tile.dataset.media;
     visibleTiles().forEach(t => t.classList.toggle('is-carousel-selected', t === tile));
 
+    stopOldVideo();
+
     const stage = document.createElement('div');
-    stage.className = 'gallery-carousel-stage';
+    stage.className = 'gallery-carousel-stage is-entering';
 
     if (source.tagName === 'VIDEO') {
       const video = document.createElement('video');
@@ -98,10 +118,11 @@
     };
 
     hero.replaceChildren(stage, prev, next, expand, counter);
+    requestAnimationFrame(() => {
+      if (token === renderToken) stage.classList.remove('is-entering');
+    });
 
-    if (scroll) {
-      tile.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-    }
+    if (scroll) scrollFilmstripTo(tile);
   }
 
   function step(delta) {
@@ -118,7 +139,6 @@
       return;
     }
 
-    // Fallback if another script has rebound the tile since enhancement.
     const freshTile = visibleTiles().find(t => t.dataset.media === tile.dataset.media);
     const freshOriginal = freshTile && originalClicks.get(freshTile);
     if (typeof freshOriginal === 'function') freshOriginal.call(freshTile, { target: freshTile });
@@ -153,7 +173,12 @@
     return tiles.find(tile => tile.classList.contains('is-cover')) || tiles[0];
   }
 
+  function syncDrawerState() {
+    document.body.classList.toggle('gallery-drawer-open', drawer.classList.contains('is-open'));
+  }
+
   function enhance() {
+    syncDrawerState();
     if (enhancing || !drawer.classList.contains('is-open')) return;
     enhancing = true;
     try {
@@ -182,12 +207,13 @@
   }
 
   const observer = new MutationObserver(records => {
-    if (records.some(record => record.type === 'childList' || (record.type === 'attributes' && record.attributeName === 'class'))) {
-      queueEnhance();
-    }
+    const relevant = records.some(record =>
+      record.type === 'childList' ||
+      (record.target === drawer && record.type === 'attributes' && record.attributeName === 'class')
+    );
+    if (relevant) queueEnhance();
   });
   observer.observe(drawer, { childList: true, subtree: true, attributes: true, attributeFilter: ['class'] });
-  observer.observe(grid, { childList: true, subtree: true });
 
   drawer.addEventListener('keydown', event => {
     if (!drawer.classList.contains('is-open')) return;
@@ -196,7 +222,6 @@
     if (event.key === 'ArrowRight') { event.preventDefault(); step(1); }
   });
 
-  // Mouse-wheel / trackpad horizontal browsing over the filmstrip.
   grid.addEventListener('wheel', event => {
     if (Math.abs(event.deltaY) > Math.abs(event.deltaX)) {
       grid.scrollLeft += event.deltaY;
